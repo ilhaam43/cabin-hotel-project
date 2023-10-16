@@ -4,7 +4,7 @@
     <div class="py-4">
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-0 mb-lg-0">
-                <h1 class="h4">Laporan</h1>
+                <h1 class="h4">Finance Head Office</h1>
             </div>
         </div>
     </div>
@@ -27,13 +27,13 @@
                                 </svg>
                             </div>
                             <div class="d-sm-none">
-                                <h2 class="h5">Room Income</h2>
+                                <h2 class="h5">Cash</h2>
                                 <h3 class="fw-extrabold mb-1">Rp 3,143,594</h3>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Room Income</h2>
+                                <h2 class="h6 text-gray-400 mb-0">Cash</h2>
                                 <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
                             </div>
                             <small class="d-flex align-items-center text-gray-500">
@@ -74,13 +74,13 @@
                                 </svg>
                             </div>
                             <div class="d-sm-none">
-                                <h2 class="fw-extrabold h5">Down Payment</h2>
+                                <h2 class="fw-extrabold h5">Non Cash</h2>
                                 <h3 class="mb-1">Rp 3,143,594</h3>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Down Payment</h2>
+                                <h2 class="h6 text-gray-400 mb-0">Non Cash</h2>
                                 <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
                             </div>
                             <small class="d-flex align-items-center text-gray-500">
@@ -121,13 +121,13 @@
                                 </svg>
                             </div>
                             <div class="d-sm-none">
-                                <h2 class="fw-extrabold h5">Food & Beverage</h2>
+                                <h2 class="fw-extrabold h5"> OTA</h2>
                                 <h3 class="mb-1">Rp 3,143,594</h3>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Food & Beverage</h2>
+                                <h2 class="h6 text-gray-400 mb-0"> OTA</h2>
                                 <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
                             </div>
                             <small class="text-gray-500">
@@ -308,7 +308,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success">Rp 100.000.000</b></div>
+            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success" >Rp 100.000.000</b></div>
         </div>
     </div>
     <!-- Tabel Room Income End -->
@@ -379,7 +379,7 @@
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
                                 class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
+                        <td><span class="fw-bold text-warning">Due</span></td>
                         <td><span class="fw-normal">Anang</span></td>
                         <td><span class="fw-normal">Reservation Guest</span></td>
                         <td><span class="fw-normal">Cash</span></td>
@@ -397,7 +397,7 @@
                                 href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
+                        <td><span class="fw-bold text-warning">Due</span></td>
                         <td><span class="fw-normal">Anang</span></td>
                         <td><span class="fw-normal">Reservation Guest</span></td>
                         <td><span class="fw-normal">-</span></td>
@@ -415,7 +415,7 @@
                                 href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
+                        <td><span class="fw-bold text-warning">Due</span></td>
                         <td><span class="fw-normal">Anang</span></td>
                         <td><span class="fw-normal">Reservation Guest</span></td>
                         <td><span class="fw-normal">Cash</span></td>
@@ -458,7 +458,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success">Rp 100.000.000</b></div>
+            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success" >Rp 100.000.000</b></div>
         </div>
     </div>
     <!-- Tabel DP Income End -->
@@ -571,7 +571,7 @@
                     </li>
                 </ul>
             </nav>
-            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success">Rp 100.000.000</b></div>
+            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success" >Rp 100.000.000</b></div>
         </div>
     </div>
     <!-- Tabel F&B Income End -->

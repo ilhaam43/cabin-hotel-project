@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 
-class FinanceController extends Controller
+class FinanceHOController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
-        return view('admin.finance.index');
+        return view('admin.financeHO.index');
     }
 }

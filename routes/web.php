@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\FinanceHOController;
 use App\Http\Controllers\RoomController;
 
 /*
@@ -23,14 +24,14 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
-Route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('login.post'); 
+Route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // This is admin route access
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['loginCheck:admin']], function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
-        
+
         Route::group(['as' => 'reservation.', 'prefix' => 'reservation'], function () {
             Route::get('/', [ReservationController::class, 'index'])->name('index');
             Route::post('/store', [ReservationController::class, 'store'])->name('store');
@@ -41,6 +42,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['as' => 'finance.','prefix' => 'finance'], function() {
             Route::get('/', [FinanceController::class, 'index'])->name('index');
+        });
+        Route::group(['as' => 'financeHO.','prefix' => 'financeHO'], function() {
+            Route::get('/', [FinanceHOController::class, 'index'])->name('index');
         });
 
         Route::group(['as' => 'room.','prefix' => 'room'], function() {
