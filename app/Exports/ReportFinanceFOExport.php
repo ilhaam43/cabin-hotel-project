@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Request;
 use Maatwebsite\Excel\Concerns\Exportable;
 use App\Models\Payment;
 use App\Models\PaymentDetail;
+use App\Models\PaymentPaid;
 use App\Models\PaymentAmenitiesTmp;
 use App\Models\HotelBranch;
 use App\Models\HotelRoomReserved;
@@ -42,18 +43,33 @@ class ReportFinanceFOExport implements FromView
         $toDate = $this->to;
 
         $query = PaymentDetail::query();
+        $queryPaid = PaymentPaid::query();
 
         $roomIncome = $query->whereHas('payment', function ($query) use ($branchId, $fromDate, $toDate) {
             //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
             $query->whereHas('reservation', function ($query) use ($branchId, $fromDate, $toDate) {
                 $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', '>=', $fromDate)->whereDate('reservation_start_date', '<=', $toDate);
             });
-        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->get();
+        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer')->orderBy('created_at', 'asc')->get();
+
+        $roomIncomePaid = $queryPaid->whereHas('payment', function ($queryPaid) use ($branchId, $fromDate, $toDate) {
+            //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
+            $queryPaid->whereHas('reservation', function ($queryPaid) use ($branchId, $fromDate, $toDate) {
+                $queryPaid->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', '>=', $fromDate)->whereDate('reservation_start_date', '<=', $toDate);
+            });
+        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer')->orderBy('created_at', 'asc')->get();
+
+        // Convert collections to arrays
+        $paymentPaidArray = $roomIncomePaid->toArray();
+        $paymentDetailArray = $roomIncome->toArray();
+
+        // Merge arrays
+        $roomIncomeFixed = array_merge($paymentPaidArray, $paymentDetailArray);
 
         // $reservation = Reservation::whereDate('created_at', '>=', $this->from)->whereDate('created_at', '<=', $this->to)->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod')->get();
         
         return view('excel.finance-fo', [
-            'roomIncome' => $roomIncome 
+            'roomIncomeFixed' => $roomIncomeFixed 
         ]);
     }
 
