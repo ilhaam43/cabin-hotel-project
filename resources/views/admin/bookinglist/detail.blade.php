@@ -185,7 +185,7 @@
                                         <h4>Rincian Kamar</h4>
                                     </div>
                                 </div>
-                                </br></br></br>
+                                </br>
                                 <div class="col-lg-12 col-sm-12">
                                     <table style="text-align: center" class="table table-hover table-bordered">
                                         <thead style="vertical-align: middle">
@@ -197,24 +197,25 @@
                                         </thead>
                                         <tbody>
                                             <!-- Item -->
+                                            @foreach($reservationDetail->hotelRoomReserved as $roomDetails)
                                             <tr>
-                                                @foreach($reservationDetail->hotelRoomReserved as $roomDetails)
                                                     <td><span class="fw-bold">{{ $roomDetails->hotelRoomNumber->room_number }}</span></td>
                                                     <td><span class="fw-normal">{{ $roomDetails->hotelRoomNumber->hotelRoom->room_type }}</span></td>
                                                     <td><span class="fw-normal">Rp. {{ $roomDetails->price }}</span></td>
-                                                @endforeach
                                             </tr>
+                                            @endforeach
                                             <!-- Item -->
                                         </tbody>
                                     </table>
                                 </div>
-                                </br></br></br></br>
+                                </br></br></br>
                                 <div class="col-lg-12 col-sm-12">
+                                </br>
                                     <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
                                         <h4>Data Pembayaran</h4>
                                     </div>
                                 </div>
-                                </br></br></br>
+                                </br></br>
                                 <div class="col-lg-2 col-sm-2">
                                     <!-- Form -->
                                     <div class="mb-4">
