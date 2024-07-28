@@ -50,14 +50,14 @@ class ReportFinanceFOExport implements FromView
             $query->whereHas('reservation', function ($query) use ($branchId, $fromDate, $toDate) {
                 $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', '>=', $fromDate)->whereDate('reservation_start_date', '<=', $toDate);
             });
-        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer')->orderBy('created_at', 'asc')->get();
+        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer', 'payment.reservation.hotelRoomReserved.hotelRoomNumber.hotelRoom')->orderBy('created_at', 'asc')->get();
 
         $roomIncomePaid = $queryPaid->whereHas('payment', function ($queryPaid) use ($branchId, $fromDate, $toDate) {
             //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
             $queryPaid->whereHas('reservation', function ($queryPaid) use ($branchId, $fromDate, $toDate) {
                 $queryPaid->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', '>=', $fromDate)->whereDate('reservation_start_date', '<=', $toDate);
             });
-        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer')->orderBy('created_at', 'asc')->get();
+        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer', 'payment.reservation.hotelRoomReserved.hotelRoomNumber.hotelRoom')->orderBy('created_at', 'asc')->get();
 
         // Convert collections to arrays
         $paymentPaidArray = $roomIncomePaid->toArray();
