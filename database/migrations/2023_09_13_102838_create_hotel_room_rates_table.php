@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hotel_branch_id')->constrained('hotel_branches')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('hotel_room_id')->constrained('hotel_rooms')->onUpdate('cascade')->onDelete('cascade');
+            $table->enum('category_day', ['Weekday', 'Weekend', 'High Season', 'Middle Day']);
             $table->integer('room_rates');
             $table->integer('room_duration');
             $table->timestamps();

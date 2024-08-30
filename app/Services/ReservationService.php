@@ -379,6 +379,7 @@ class ReservationService
     public function storeRoomOrder($request)
     {
         $excludedStatuses = ['Checkout', 'Canceled'];
+        
         $user = Auth::user();
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $customerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->first();
@@ -412,7 +413,7 @@ class ReservationService
         ->exists();
 
         if ($hasReservationWithinRange) {
-        return ['error' => 'Tambah kamar gagal karena sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
+            return ['error' => 'Tambah kamar gagal karena sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
         }
 
         if(!$reservationTmp){
@@ -452,7 +453,7 @@ class ReservationService
         $diff = $checkin->diffInHours($checkout);
 
         if($diff <= 8){ //harga kamar dibawah 8 jam dibulatkan ke 8 jam
-            $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 8)->first();
+            $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('category_day', $request['reservation_day_category'])->where('room_duration', 8)->first();
 
             $request['price'] = $priceHour->room_rates;
         }else if($diff > 24){ //logic perhitungan khusus untuk harga kamar diatas 24 jam
@@ -460,22 +461,22 @@ class ReservationService
             $remainsHour = $diff % 24;
             if($remainsHour !== 0){
                 $remainsHour = $remainsHour < 8 ? 8 : $remainsHour;
-                $priceDay = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
-                $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', $remainsHour)->first();
+                $priceDay = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('category_day', $request['reservation_day_category'])->where('room_duration', 24)->first();
+                $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('category_day', $request['reservation_day_category'])->where('room_duration', $remainsHour)->first();
 
                 $request['price'] = ($priceDay->room_rates * $resultDay) + ($priceHour->room_rates ?? 0);
             }else{
-                $priceDay = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
+                $priceDay = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('category_day', $request['reservation_day_category'])->where('room_duration', 24)->first();
 
                 $request['price'] = $priceDay->room_rates * $resultDay;
             }
         }else{
-            $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', $diff)->first();
+            $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('category_day', $request['reservation_day_category'])->where('room_duration', $diff)->first();
 
             if($priceHour){
                 $request['price'] = $priceHour->room_rates ?? 0;
             }else{
-                $priceHourHandling = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
+                $priceHourHandling = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('category_day', $request['reservation_day_category'])->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
 
                 $request['price'] = $priceHourHandling->room_rates ?? 0;
             }

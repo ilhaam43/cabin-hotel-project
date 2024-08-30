@@ -14,4 +14,9 @@ class HotelRoomRate extends Model
     protected $guarded = ['
         id
     '];
+
+    public function hotelRoom()
+    {
+        return $this->belongsTo(HotelRoom::class);
+    }
 }

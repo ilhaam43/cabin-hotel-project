@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FinanceHeadOfficeController;
 use App\Http\Controllers\BookingListController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\RoomManagementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +71,23 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [FinanceHeadOfficeController::class, 'index'])->name('index');
         Route::post('/report/head-office', [FinanceHeadOfficeController::class, 'reportHeadOffice'])->name('report.head-office');
         Route::post('/report/export-excel/head-office', [FinanceHeadOfficeController::class, 'reportExcelHeadOffice'])->name('report.export-excel.head-office');
+    });
+});
+
+// This is supervisor route access
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['as' => 'supervisor.', 'prefix' => 'supervisor', 'middleware' => ['loginCheck:supervisor']], function () {
+        Route::get('/', [SupervisorController::class, 'index'])->name('index');
+        Route::get('/room-management', [RoomManagementController::class, 'index'])->name('room-management.index');
+        Route::post('/room-management/store', [RoomManagementController::class, 'storeRoomBranch'])->name('room-management.store-room-branch');
+        Route::put('/room-management/update', [RoomManagementController::class, 'updateRoomBranch'])->name('room-management.update-room-branch');
+        Route::delete('/room-management/delete/{id}', [RoomManagementController::class, 'deleteRoomBranch'])->name('room-management.delete-room-branch');
+        Route::get('/room-management/room-type', [RoomManagementController::class, 'roomType'])->name('room-management.room-type.index');
+        Route::post('/room-management/room-type/store', [RoomManagementController::class, 'storeRoomType'])->name('room-management.store-room-type');
+        Route::put('/room-management/room-type/update', [RoomManagementController::class, 'updateRoomType'])->name('room-management.update-room-type');
+        Route::get('/room-management/room-price', [RoomManagementController::class, 'roomPrice'])->name('room-management.room-price.index');
+        Route::post('/room-management/room-price/store', [RoomManagementController::class, 'storeRoomPrice'])->name('room-management.store-room-price');
+        Route::put('/room-management/room-price/update', [RoomManagementController::class, 'updateRoomPrice'])->name('room-management.update-room-price');
     });
 });
 

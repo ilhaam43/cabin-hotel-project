@@ -29,4 +29,9 @@ class HotelRoomNumber extends Model
     {
         return $this->belongsTo(HotelRoom::class);
     }
+
+    public function hotelRoomStatus()
+    {
+        return $this->belongsTo(HotelRoomStatus::class, 'room_status_id');
+    }
 }

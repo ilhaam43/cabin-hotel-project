@@ -59,7 +59,19 @@ class PicHotelBranchSeeder extends Seeder
             [
                 'hotel_branch_id' => 11,
                 'user_id' => 12,
-            ]
+            ],
+            [
+                'hotel_branch_id' => 12,
+                'user_id' => 14,
+            ],
+            [
+                'hotel_branch_id' => 9,
+                'user_id' => 15,
+            ],
+            [
+                'hotel_branch_id' => 12,
+                'user_id' => 16,
+            ],
         ];
 
         foreach ($pic as $key => $value) {

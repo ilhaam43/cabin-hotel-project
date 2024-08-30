@@ -71,6 +71,11 @@ class HotelBranchSeeder extends Seeder
                 'hotel_address' => 'Kota Yogyakarta',
                 'hotel_code' => 'NGU',
             ],
+            [
+                'hotel_name' => 'The Cabin Tugu',
+                'hotel_address' => 'Kota Yogyakarta Tugu',
+                'hotel_code' => 'TGU',
+            ]
         ];
 
         foreach ($hotelBranches as $key => $value) {

@@ -16,6 +16,7 @@ use App\Models\PaymentAmenitiesTmp;
 use App\Models\Reservation;
 use App\Models\DownPayment;
 use App\Models\Payment;
+use App\Models\PaymentPaid;
 use App\Models\HotelRoomReserved;
 use App\Models\PaymentDetail;
 use App\Models\HotelBranch;
@@ -37,6 +38,31 @@ class FinanceController extends Controller
         $user = Auth::user();
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $branchId = $pic->hotel_branch_id;
+
+        $query = PaymentDetail::query();
+        $queryPaid = PaymentPaid::query();
+
+        $roomIncome = $query->whereHas('payment', function ($query) use ($branchId) {
+            //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
+            $query->whereHas('reservation', function ($query) use ($branchId) {
+                $query->where('hotel_branch_id', $branchId);
+            });
+        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer', 'payment.reservation.hotelRoomReserved.hotelRoomNumber.hotelRoom')->orderBy('created_at', 'asc')->get();
+
+        $roomIncomePaid = $queryPaid->whereHas('payment', function ($queryPaid) use ($branchId) {
+            //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
+            $queryPaid->whereHas('reservation', function ($queryPaid) use ($branchId) {
+                $queryPaid->where('hotel_branch_id', $branchId);
+            });
+        })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation.customer', 'payment.reservation.hotelRoomReserved.hotelRoomNumber.hotelRoom')->orderBy('created_at', 'asc')->get();
+
+        // Convert collections to arrays
+        $paymentPaidArray = $roomIncomePaid->toArray();
+        $paymentDetailArray = $roomIncome->toArray();
+
+        // Merge arrays
+        $roomIncomeFixed = array_merge($paymentPaidArray, $paymentDetailArray);
+
         $paymentMethod = PaymentMethod::all();
         $queryReservation = Reservation::query();
         $queryDP = Reservation::query();

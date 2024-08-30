@@ -14,4 +14,9 @@ class HotelRoomStatus extends Model
     protected $guarded = ['
         id
     '];
+
+    public function hotelRoomNumber()
+    {
+        return $this->hasOne(HotelRoomNumber::class);
+    }
 }

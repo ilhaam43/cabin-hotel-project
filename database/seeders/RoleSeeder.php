@@ -25,6 +25,9 @@ class RoleSeeder extends Seeder
             [
                 'role_name' => 'financeHO',
             ],
+            [
+                'role_name' => 'supervisor',
+            ],
         ];
 
         foreach ($roles as $key => $value) {
